@@ -6,7 +6,7 @@ from . import views
 
 urlpatterns = [
     path('', views.index, name='index'),
-    path('admin', views.Admin, name='Admin'),
-    path('Driver', views.Driver, name='Driver'),
-    path('User', views.User, name='User'),
+    path('admin', views.Admin, name='admin'),
+    path('driver', views.Driver, name='driver'),
+    path('user/<path:travelid>', views.User, name='user'),
 ]

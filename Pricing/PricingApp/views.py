@@ -12,10 +12,45 @@ def index(request):
 
 
 def Admin(request):
-    return render(request,'Admin.html')
+    #UpdatePrice
+    if request.method == "POST" and request.POST.get('req') == 'UpdatePrice':
+        print('Inside Update Price')
+        url = utils.makeup_url('pricingModule.py')
+        print(url)
+        payload = {'req':'updatePrice','type':request.POST.get('type'),'price':request.POST.get('price')}
+        print(payload)
+        priceres = requests.post(url,data = payload).json()
+        return JsonResponse({'data':priceres},status=200)
+    
+    url = utils.makeup_url('pricingModule.py')
+    payload = {'req':'getPrice'}
+    price = requests.post(url,data = payload).json()
+    return render(request,'Admin.html',{'price':price})
 
 def Driver(request):
-    return render(request,'Driver.html')
+    if request.method == "POST" and 'generatebill' in request.POST:
+        print('Inside generatebill')
+        url = utils.makeup_url('pricingModule.py')
+        payload = {'req':'clculatePrice','name':request.POST.get('Pname'),'distance':request.POST.get('Tdistance'),'time':request.POST.get('Ttime')}
+        print(payload)
+        response = requests.post(url,data=payload).json()
+        if response['response']:
+            return redirect('user',travelid=response['travalID'])
+        else:
+            return render(request,'Driver.html',{'iserror':True,'errmsg':'Error in generate bill'})
+        
+        
+    return render(request,'Driver.html',{'iserror':False,'errmsg':'NA'})
 
-def User(request):
-    return render(request,'User.html')
+def User(request,travelid=None):
+    url = utils.makeup_url('pricingModule.py')
+    payload = {'req':'getDetails','travalID':travelid}
+    print(payload)
+    response = requests.post(url,data=payload).json()
+    bill={}
+    bill['travelid']=response['travalID']
+    bill['name']=response['name']
+    bill['time']=response['time']
+    bill['distance']=response['distance']
+    bill['totalprice']=response['totalPrice']
+    return render(request,'User.html',{'bill':bill})

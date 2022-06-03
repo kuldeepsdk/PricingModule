@@ -1,1 +1,20 @@
-<h1>Jai Shree Krishna</h1>
+{% extends "Global.html" %}
+{% load static %}
+{% block Head %}
+<title>Index</title>
+{% endblock %}
+{% block Style %}
+{% endblock %}
+{% block Body %}
+<div class="container mt-10">
+    <div class="row d-flex">
+        <div class="col-3 mx-auto card px-3 py-5">
+            <a class="btn bg-primary text-white rounded" href="/admin"> Admin </a><br>
+            <a class="btn bg-primary text-white rounded" href="/driver"> Driver </a>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block Script %}
+{% endblock %}
+

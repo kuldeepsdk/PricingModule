@@ -1,0 +1,35 @@
+{% extends "Global.html" %}
+{% load static %}
+{% block Head %}
+<title>User</title>
+{% endblock %}
+{% block Style %}
+{% endblock %}
+{% block Body %}
+<div class="container text-center">
+    <h3>Pricing Module | Passenger Bill</h3><br>
+    <div class="row d-flex">
+        <div class="col-auto mx-auto card px-3 py-2 d-flex">
+            <div class="row" style="width:30rem">
+                <div class="col-12 text-right">
+                    <small>Transaction ID : {{bill.travelid}}</small>
+                </div>
+                <div class="col-12 text-left">
+                    <h4>Name : {{bill.name}}</h4>
+                </div>
+                <div class="col-6  text-left">
+                    <p>Total Traveling time : {{bill.time}} hour</p>
+                </div>
+                <div class="col-6  text-left">
+                    <p>Total Traveling distance : {{bill.distance}} km</p>
+                </div>
+                <div class="col-12  text-center">
+                    <h4>Total Price : $ {{bill.totalprice}}</h4>
+                </div>
+            </div>   
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block Script %}
+{% endblock %}

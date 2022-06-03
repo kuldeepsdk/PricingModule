@@ -1,0 +1,75 @@
+{% extends "Global.html" %}
+{% load static %}
+{% block Head %}
+    <title>Admin</title>
+{% endblock %}
+{% block Style %}
+{% endblock %}
+{% block Body %}
+    <div class="container text-center">
+        <h3>Pricing Module | Admin Panel</h3><br>
+        <div class="row d-flex">
+            <div class="col-auto mx-auto card px-3 py-5">
+                <table class="table">
+                    <thead>
+                      <tr>
+                        <th scope="col">id</th>
+                        <th scope="col">Type</th>
+                        <th scope="col">price</th>
+                        <th scope="col">Update</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <th scope="row">1</th>
+                        <td>TBP</td>
+                        <td><input type="text" id="TBPPrice" value="{{price.TBP}}" /></td>
+                        <td><a class="btn bg-primary text-white rounded px-2 py-1" onclick="UpdatePrice('tbp','TBPPrice')" >Update TBP Price</a></td>
+                      </tr>
+                      <tr>
+                        <th scope="row">2</th>
+                        <td>DBP</td>
+                        <td><input type="text" id="DBPPrice" value="{{price.DBP}}" /></td>
+                        <td><a class="btn bg-primary text-white rounded px-2 py-1" onclick="UpdatePrice('dbp','DBPPrice')" >Update DBP Price</a></td>
+                      </tr>
+                    </tbody>
+                  </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block Script %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+    function UpdatePrice(type,id){
+        price=$('#'+id).val();
+        if(price!='')
+        {
+            $.ajax({
+                type:'POST',
+                data:{
+                    csrfmiddlewaretoken: "{{ csrf_token }}",
+                    req:'UpdatePrice',
+                    type:type,
+                    price:price,
+                },
+                success:function(response){
+                    var data = response['data'];
+                    if(data['response'])
+                    {
+                        alert('Price updated');
+                    }else{
+                        alert('Error occured in Price update');
+                    }
+                },
+                errorLfunction(response){
+
+                },
+            });
+        }else{
+            alert("Please Insert Price");
+        }
+    }
+</script>
+{% endblock %}
+
